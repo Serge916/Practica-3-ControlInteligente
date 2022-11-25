@@ -9,7 +9,7 @@ t_max = 5000  # (s) este parámetro no se cambia
 seeds = [123456789]
 
 q = 0.2 ** 2  # prueba con distinto ruido odométrico, varianza (m2)
-r = 0.5 ** 2  # prueba con distinto ruido sensorial, varianza (m2)
+r = 0.2 ** 2  # prueba con distinto ruido sensorial, varianza (m2)
 rango_sensor = 5  # prueba con distinto alcance sensorial (m)
 
 # Localización por odometría
