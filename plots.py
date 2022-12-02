@@ -1,11 +1,12 @@
 import matplotlib.pyplot as plt
 
-def plot_estados(estados, file=None, ymax=None):
+def plot_estados(estados, q, r, file=None, ymax=None):
     fig, axes = plt.subplots(5, 1)
 
     axes[0].plot(estados['x'], linewidth=0.8)
     axes[0].plot(estados['xest'], linewidth=0.8)
     axes[0].set_ylabel('x (azul)\nx_est (rojo)')
+    plt.suptitle("q = " + str(q) + ", r = " + str(r), fontsize = 14 )
     if (ymax is not None):
         axes[0].set_ylim(-ymax * 0.05, ymax * 1.05)
 
@@ -34,5 +35,7 @@ def plot_estados(estados, file=None, ymax=None):
         plt.show()
     else:
         plt.savefig(file)
+
+    
 
 
