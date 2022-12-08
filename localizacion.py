@@ -67,6 +67,7 @@ def localizacion_odometrica(q, r, rango_sensor, dist, t_max, seed):
 
         fila = {'x': [x], 'xest': [x_est], 'xerror': [math.fabs(x - x_est)], 'p': [p], 'z': [math.nan], 'K': [math.nan]}
         estados = pd.concat([estados, pd.DataFrame(fila)], ignore_index=True)
+    print(estados[0].mean())
     return estados
 
 
@@ -188,5 +189,7 @@ def localizacion_FK(q, r, rango_sensor, dist, t_max, seeds):
             fila = {'x': [x[0][0]], 'xest': [x_est[0][0]], 'xerror': [math.fabs(x[0][0] - x_est[0][0])], 'p': [P[0][0]],
                     'z': [z0[0][0]], 'K': [K[0][0]]}
             estados[i] = pd.concat([estados[i], pd.DataFrame(fila)], ignore_index=True)
+    print(estados[0].mean())
+
 
     return estados
