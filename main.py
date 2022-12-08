@@ -3,6 +3,7 @@ import localizacion as loc
 import plots
 import csv
 
+
 dist = 200    # (m) este parámetro no se cambia
 t_max = 5000  # (s) este parámetro no se cambia
 
@@ -15,7 +16,7 @@ rango_set = [5]
 
 with open('log.csv','w', newline='') as file:
     writer = csv.writer(file)
-    writer.writerow(['x', 'xest', 'xerror', 'p', 'z', 'K'])
+    writer.writerow(['x', 'xest', 'xerror', 'p', 'z', 'K', 'var_q', 'var_r'])
 
     for j in enumerate(r_eval):
         r_set = j[1]

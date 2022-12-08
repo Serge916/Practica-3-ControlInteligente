@@ -28,7 +28,7 @@ def localizacion_odometrica(q, r, rango_sensor, dist, t_max, seed):
     x_est = 0  # Posición en x
     p = 0  # Varianza en x
 
-    estados = pd.DataFrame(data={'x': [], 'xest': [], 'xerror': [], 'p': [], 'z': [], 'K': []})
+    estados = pd.DataFrame(data={'x': [], 'xest': [], 'xerror': [], 'p': [], 'z': [], 'K': [], 'q': [], 'r': []})
 
     # Simulación
     for t in range(t_max):
@@ -65,7 +65,7 @@ def localizacion_odometrica(q, r, rango_sensor, dist, t_max, seed):
         x_est = x_est + v_est  # Estimacion del nuevo estado
         p = p + q  # Varianza del error asociada a la estimacion a priori
 
-        fila = {'x': [x], 'xest': [x_est], 'xerror': [math.fabs(x - x_est)], 'p': [p], 'z': [math.nan], 'K': [math.nan]}
+        fila = {'x': [x], 'xest': [x_est], 'xerror': [math.fabs(x - x_est)], 'p': [p], 'z': [math.nan], 'K': [math.nan], 'q': [q], 'r': [r]}
         estados = pd.concat([estados, pd.DataFrame(fila)], ignore_index=True)
     return estados
 
@@ -121,7 +121,7 @@ def localizacion_FK(q, r, rango_sensor, dist, t_max, seeds):
         # Landmark al principio del pasillo (izquierda)
         m0 = 0
 
-        estados.append(pd.DataFrame(data={'x': [], 'xest': [], 'xerror': [], 'p': [], 'z': [], 'K': []}))
+        estados.append(pd.DataFrame(data={'x': [], 'xest': [], 'xerror': [], 'p': [], 'z': [], 'K': [], 'q': [], 'r': []}))
 
         # Simulación
         for t in range(t_max):
@@ -186,7 +186,7 @@ def localizacion_FK(q, r, rango_sensor, dist, t_max, seeds):
                               [ 0, 0]])  # 2x2 para (x,y)
 
             fila = {'x': [x[0][0]], 'xest': [x_est[0][0]], 'xerror': [math.fabs(x[0][0] - x_est[0][0])], 'p': [P[0][0]],
-                    'z': [z0[0][0]], 'K': [K[0][0]]}
+                    'z': [z0[0][0]], 'K': [K[0][0]], 'q': [q], 'r': [r]}
             estados[i] = pd.concat([estados[i], pd.DataFrame(fila)], ignore_index=True)
 
     return estados
