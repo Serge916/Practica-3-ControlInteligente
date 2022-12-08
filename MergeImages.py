@@ -31,7 +31,11 @@ def get_concat_v_multi_resize(im_list, resample=Image.BICUBIC):
         pos_y += im.height
     return dst
 
-images = [Image.open(file) for file in glob.glob("media/lfk*.png")]
-N =  round(math.sqrt(len(images)))
-images2d = [[images[i*N+j] for i in range(N)] for j in range(N)]
-get_concat_tile_resize(images2d).save(".png")
+def make_image(path):
+    images = [Image.open(file) for file in glob.glob(path)]
+    N =  round(math.sqrt(len(images)))
+    images2d = [[images[i*N+j] for i in range(N)] for j in range(N)]
+    return get_concat_tile_resize(images2d)
+
+make_image("media/lfk*.png").save("Merged_LFK.png")
+make_image("media/lo*.png").save("Merged_LO.png")
