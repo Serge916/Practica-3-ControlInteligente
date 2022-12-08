@@ -28,7 +28,7 @@ with open('log.csv','w', newline='') as file:
 
             # Localización por odometría
             estados1 = loc.localizacion_odometrica(q, r, rango_sensor, dist, t_max, seeds[0])
-            #plots.plot_estados(estados1, i[1], r_set, "media/lo_q" + str(i[0]) + "r" + str(j[0]) + ".pdf", dist)
+            plots.plot_estados(estados1, i[1], r_set, "media/lo_q" + str(i[0]) + "r" + str(j[0]) + ".png", dist)
             writer.writerow(estados1.mean())
 
             # Localización con FK y un landmark
@@ -36,4 +36,4 @@ with open('log.csv','w', newline='') as file:
             writer.writerow(estados2[0].mean())
             estados2_media = sum(estados2)/len(estados2)
             plt.figure(2)
-            #plots.plot_estados(estados2_media, i[1], r_set, "media/lfk" + str(i[0]) + "r" + str(j[0]) + ".pdf", dist)
+            plots.plot_estados(estados2_media, i[1], r_set, "media/lfk_q" + str(i[0]) + "r" + str(j[0]) + ".png", dist)

@@ -1,1 +1,0 @@
-#Programa para plotear distintos valores de ruido.
