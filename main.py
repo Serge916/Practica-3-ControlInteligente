@@ -13,6 +13,8 @@ seeds = [123456789]
 
 q_set = [0.2, 0.4, 0.5, 0.7]
 r_eval = [0.2, 0.3, 0.4, 0.8]
+#q_set = [0.8]
+#r_eval = [0.7]
 rango_set = [5]
 
 with open('log.csv','w', newline='') as file:

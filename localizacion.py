@@ -118,8 +118,8 @@ def localizacion_FK(q, r, rango_sensor, dist, t_max, seeds):
         K = np.array([[0, 0],
                       [0, 0]])  # 2x2 para (x,y)
 
-        # Landmark al principio del pasillo (izquierda)
-        m0 = 0
+        # Landmarks definidos respecto del origen
+        m = [0, 100, 200]
 
         estados.append(pd.DataFrame(data={'x': [], 'xest': [], 'xerror': [], 'p': [], 'z': [], 'K': [], 'q': [], 'r': []}))
 
@@ -161,17 +161,25 @@ def localizacion_FK(q, r, rango_sensor, dist, t_max, seeds):
 
             correccion = False
 
-            if (math.fabs(x[0][0] - m0) < rango_sensor):  # si se detecta el landmark
-                # Actualizamos la observación (con ruido)
-                z0 = np.array([[x[0][0] + r2 * (r**0.5)], [0]])
-                correccion = True
-            else:
-                z0 = np.array([[math.nan], [0]])
+            z = []
+            for mi in m:
+                if (math.fabs(x[0][0] - mi) < rango_sensor):  # si se detecta el landmark
+                    # Actualizamos la observación (con ruido)
+                    foo = np.array([[x[0][0] + r2 * (r**0.5)], [0]])
+                    correccion = True
+                else:
+                    foo = np.array([[math.nan], [0]])
+                z.append(foo)
 
-            # Corrección basada en z0, solo si se detectó algún landmark
+            # Corrección basada en z0, sólo si se detectó algún landmark
             if (correccion):
                 # Actualización de la medición (innovación)
-                innov = z0 - H * x_est
+                innov = points = 0
+                for zi in z:
+                    if not math.isnan(zi[0]):
+                        innov += zi - H * x_est
+                        points += 1
+                innov /= points         #Hago la media
 
                 # Ganancia de Kalman
                 K = P * np.transpose(H) * inv(H * P * np.transpose(H) + R)
@@ -186,7 +194,7 @@ def localizacion_FK(q, r, rango_sensor, dist, t_max, seeds):
                               [ 0, 0]])  # 2x2 para (x,y)
 
             fila = {'x': [x[0][0]], 'xest': [x_est[0][0]], 'xerror': [math.fabs(x[0][0] - x_est[0][0])], 'p': [P[0][0]],
-                    'z': [z0[0][0]], 'K': [K[0][0]], 'q': [q], 'r': [r]}
+                    'z': [z[0][0]], 'K': [K[0][0]], 'q': [q], 'r': [r]}
             estados[i] = pd.concat([estados[i], pd.DataFrame(fila)], ignore_index=True)
 
     return estados

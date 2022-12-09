@@ -35,6 +35,7 @@ def plot_estados(estados, q, r, file=None, ymax=None):
         plt.show()
     else:
         plt.savefig(file)
+    plt.close()
 
     
 
