@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import localizacion as loc
 import plots
 import csv
+import MergeImages as merge
 
 
 dist = 200    # (m) este parámetro no se cambia
@@ -37,3 +38,6 @@ with open('log.csv','w', newline='') as file:
             estados2_media = sum(estados2)/len(estados2)
             plt.figure(2)
             plots.plot_estados(estados2_media, i[1], r_set, "media/lfk_q" + str(i[0]) + "r" + str(j[0]) + ".png", dist)
+
+merge.make_image("media/lfk*.png").save("Merged_LFK.png")
+merge.make_image("media/lo*.png").save("Merged_LO.png")
