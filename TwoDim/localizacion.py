@@ -94,7 +94,7 @@ def localizacion_FK(q, r, rango_sensor, dist, t_max, seeds):
         
 
         # Vector de estado (x,y)
-        #    x_est = np.transpose(np.array([x, 0]))  # 1x2 para (x,y)
+        #x_est = np.transpose(np.array([x, 0]))  # 1x2 para (x,y)
         x_est = x.copy()  # 1x2 para (x,y)
 
         # Covarianza del error asociada a la estimación a priori
