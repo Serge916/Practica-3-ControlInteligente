@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
 q = 0.3 ** 2
-r = 0.06 ** 2
+r = 0.1 ** 2
 rango_sensor = 100
 t_max = 5000
 
@@ -50,12 +50,15 @@ m = [ (0, 2*radio),
 estados = pd.DataFrame(estados.append(pd.DataFrame(data = {'x_est':[], 'x': [], 'err': [], 'p': [], 'z': [], 'k': []})))
 
 
-flag = False
+
 #Simulación
 for t in range(t_max):
     #Calculo los números aleatorios
     r1 = rnd.gauss(0,1)
     r2 = rnd.gauss(0,1)
+    r3 = rnd.gauss(0,1)
+    r4 = rnd.gauss(0,1)
+    r5 = rnd.gauss(0,1)
 
     #Posiciones ideales
     ang_id += v_ang
@@ -64,8 +67,8 @@ for t in range(t_max):
 
     #Posiciones reales
     ang += v_ang + r1/(20*math.pi) * (q**0.5)
-    x[0][0] += v_lin * math.cos(ang) + r1 * (q**0.5)
-    x[1][0] += v_lin * math.sin(ang) + r1 * (q**0.5)
+    x[0][0] += (v_lin + r2 * (q**0.5)) * math.cos(ang) 
+    x[1][0] += (v_lin + r3 * (q**0.5)) * math.sin(ang)
   
     #Filtro
     P = P + Q  # varianza del error asociada a la estimación a priori
@@ -75,9 +78,7 @@ for t in range(t_max):
     for mi in m:
         if ( math.fabs(( math.sqrt( (mi[0] - x[0][0])**2 + (mi[1] - x[1][0])**2) ) ) < rango_sensor):  # si se detecta el landmark
             # Actualizamos la observación (con ruido)
-            foo = np.array([[x[0][0] + r2 * (r**0.5)], [x[1][0] + r2 * (r**0.5)]])
-            if not flag: 
-                flag = True 
+            foo = np.array([[x[0][0] + r4 * (r**0.5)], [x[1][0] + r5 * (r**0.5)]])
             correccion = True
         else:   
             foo = np.array([[math.nan], [math.nan]])
@@ -96,10 +97,7 @@ for t in range(t_max):
 
         # Ganancia de Kalman
         K = P @ np.transpose(H) @ inv(H @ P @ np.transpose(H) + R)
-        """
-        if flag:
-            print("x_est1: ", x_est)
-        """
+
         # Estimación a posteriori
         x_est = x_est + K @ innov
 
@@ -112,16 +110,6 @@ for t in range(t_max):
     fila = {'x_est': [(x_est[0][0], x_est[1][0])], 'x': [(x[0][0], x[1][0])], 'err':[math.fabs(x[1][0]-x_est[1][0]+x[0][0]-x_est[0][0])],
              'p': [(P[0][0], P[1][1])], 'k': [(K[0][0], K[1][1])], 'z': [(z[0][0], z[1][0])]}
     estados = pd.concat([estados, pd.DataFrame(fila)], ignore_index=True )
-    """
-    if flag:
-        print("x_est2: ",x_est)
-        print("foo: ",foo)
-        print("K: ",K)
-        print("P: ",P)
-        print("x_real: ",x)
-        print("innov: ", innov)
-        wait = input("Press enter to continue...")
-    """
 
 disp = plt.figure(num="MovimientoCircular",figsize=(5,5))
 c,v = zip(*estados['x_est'])
@@ -179,11 +167,11 @@ c,v = zip(*estados['p'])
 axes[5].plot(timesim, c, linewidth=0.8)
 axes[5].plot(timesim, v, linewidth=0.8)
 
-for i in range(5):
+for i in range(6):
     axes[i].spines['top'].set_visible(False)
     axes[i].spines['right'].set_visible(False)
     axes[i].grid(linestyle=':', linewidth=0.3)
-    if (i < 4):
+    if (i < 5):
         axes[i].set_xticklabels([])
 
 plt.show()
