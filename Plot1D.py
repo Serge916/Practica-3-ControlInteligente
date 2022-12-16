@@ -19,10 +19,14 @@ plt.yticks(fontsize = 12)
 plt.show()
 
 #Representación de la posición en función de K.
-sns.jointplot(data=df, x='x', y='K')
-
+lista = (101.49495851238431,98.0376,68.35287449623242,100.02000000000164, 0.040000000000000015,0.040000000000000015)
+df_select = df.loc[df.x.isin([lista]), :]
+sns.set_style("white")
+gridobj = sns.lmplot(x="xerror",  y="xest", hue="x", data=df,
+                     height=7, aspect=1.6, robust=True, palette='tab10',
+                     scatter_kws=dict(s=60, linewidths=.7, edgecolors='black'))
 #Decoración del argumento
-plt.title("Relación entre las variables x y K")
+plt.title("Relación entre las variables x y xerror")
 plt.xticks(fontsize = 12)
 plt.yticks(fontsize = 12)
 plt.show()
@@ -30,6 +34,3 @@ plt.show()
 #Representación Figura 3
 sns.pairplot(df, hue = "x", palette='coolwarm')
 plt.show()
-
-
-
