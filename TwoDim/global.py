@@ -11,7 +11,6 @@ r = 0.1 ** 2
 rango_sensor = 100
 t_max = 5000
 
-estados = []
 
 #Constantes iniciales
 v_lin = 0.5     #Velocidad lineal m/s
@@ -46,8 +45,7 @@ K = np.array([[0, 0],
 m = [ (0, 2*radio),
         (0, 0)]
 
-#estados.append(pd.DataFrame(data={'x': [], 'xest': [], 'xerror': [], 'p': [], 'z': [], 'K': [], 'q': [], 'r': []}))
-estados = pd.DataFrame(estados.append(pd.DataFrame(data = {'x_est':[], 'x': [], 'err': [], 'p': [], 'z': [], 'k': []})))
+estados = pd.DataFrame(data = {'x_est':[], 'x': [], 'err': [], 'p': [], 'z': [], 'k': []})
 
 
 
@@ -160,7 +158,7 @@ axes[4].set_ylabel('K')
 c,v = zip(*estados['k'])
 axes[4].plot(timesim, c, linewidth=0.8)
 axes[4].plot(timesim, v, linewidth=0.8)
-#axes[3].set_ylim(0, 1)
+
 
 axes[5].set_ylabel('P')
 c,v = zip(*estados['p'])

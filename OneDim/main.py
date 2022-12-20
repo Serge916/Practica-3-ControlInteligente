@@ -8,13 +8,13 @@ import MergeImages as merge
 dist = 200    # (m) este parámetro no se cambia
 t_max = 5000  # (s) este parámetro no se cambia
 
-seeds = [123456789, 234567891, 34567891, 456789123, 567891234, 67891234, 7891234, 89123456, 912345678, 213456789]
-#seeds = [123456789]
+#seeds = [123456789, 234567891, 34567891, 456789123, 567891234, 67891234, 7891234, 89123456, 912345678, 213456789]
+seeds = [123456789]
 
-q_set = [0.2, 0.4, 0.5, 0.7]
-r_eval = [0.2, 0.3, 0.4, 0.8]
-#q_set = [0.8]
-#r_eval = [0.7]
+#q_set = [0.2, 0.4, 0.5, 0.7]
+#r_eval = [0.2, 0.3, 0.4, 0.8]
+q_set = [0.8]
+r_eval = [0.7]
 rango_set = [5]
 
 with open('log.csv','w', newline='') as file:
