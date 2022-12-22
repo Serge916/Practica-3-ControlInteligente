@@ -10,14 +10,14 @@ import math
 dist = 200    # (m) este parámetro no se cambia
 t_max = 5000  # (s) este parámetro no se cambia
 
-seeds = [123456789, 234567891, 34567891, 456789123, 567891234, 67891234, 7891234, 89123456, 912345678, 213456789]
-#seeds = [123456789]
+#seeds = [123456789, 234567891, 34567891, 456789123, 567891234, 67891234, 7891234, 89123456, 912345678, 213456789]
+seeds = [123456789, 123456789]
 
 #q_set = [0.2, 0.4, 0.5, 0.7]
 #r_eval = [0.2, 0.3, 0.4, 0.8]
-q_set = [0.2]
-r_eval = [0.4]
-rango_set = [70]
+q_set = [0.3]
+r_eval = [0.1]
+rango_set = [100]
 
 #Ctes iniciales
 v_lin = 0.5     #Velocidad lineal m/s
@@ -45,7 +45,8 @@ with open('log.csv','w', newline='') as file:
             err = []
             x_est = []
             y_est = []
-            z = []
+            zx = []
+            zy = []
             Kx = []
             Ky = []
             px = []
@@ -56,7 +57,8 @@ with open('log.csv','w', newline='') as file:
                     err.append(sum(estados2[k]['err'][l] for k in range(len(estados2)))/len(estados2))
                     x_est.append(sum(estados2[k]['x_est'][l][0] for k in range(len(estados2)))/len(estados2))
                     y_est.append(sum(estados2[k]['x_est'][l][1] for k in range(len(estados2)))/len(estados2))
-                    z.append(sum(estados2[k]['z'][l][1] for k in range(len(estados2)))/len(estados2))
+                    zx.append(sum(estados2[k]['z'][l][1] for k in range(len(estados2)))/len(estados2))
+                    zy.append(sum(estados2[k]['z'][l][1] for k in range(len(estados2)))/len(estados2))
                     Kx.append(sum(estados2[k]['k'][l][0] for k in range(len(estados2)))/len(estados2))
                     Ky.append(sum(estados2[k]['k'][l][1] for k in range(len(estados2)))/len(estados2))
                     px.append(sum(estados2[k]['p'][l][0] for k in range(len(estados2)))/len(estados2))
@@ -73,6 +75,7 @@ with open('log.csv','w', newline='') as file:
             yest_var = np.std(y_est)
             p = [math.sqrt(px[k]**2 + py[k]**2) for k in range(t_max)]
             K = [math.sqrt(Kx[k]**2 + Ky[k]**2) for k in range(t_max)]
+            z = [math.sqrt(zx[k]**2 + zy[k]**2) for k in range(t_max)]
             
             fila = [x_mean, x_var, y_mean, y_var, xest_mean, xest_var, yest_mean, yest_var, err_mean, err_var]
             writer.writerow(fila)

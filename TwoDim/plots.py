@@ -3,10 +3,10 @@ import math
 import numpy as np
 
 def plot_estados(estados, q, r, m, rango_sensor, file=None, ymax=None):
-    '''
+   # '''
     disp = plt.figure(num="MovimientoCircular",figsize=(5,5))
-    plt.plot(estados['x'], estados['y'], color='red' linewidth=1, label="Real")
-    plt.plot(estados['x_est'],estados['y_est'], linestyle='dashed', color='blue', linewidth=1 , label="Estimado")
+    plt.plot(estados['x_est'],estados['y_est'], linestyle='dashed', linewidth=1 , label="Estimado")
+    plt.plot(estados['x'], estados['y'], linewidth=1, label="Real")
 
     #Circunferencia de radio = rango_sensor
     angles = np.linspace(0, 2*math.pi, 150)
@@ -26,7 +26,7 @@ def plot_estados(estados, q, r, m, rango_sensor, file=None, ymax=None):
     plt.show()
 
     plt.close()
-    '''
+    #'''
     fig, axes = plt.subplots(6,1)
     timesim = list(range(0, len(estados)))
     axes[0].plot(timesim, estados['x'], linewidth=0.8)

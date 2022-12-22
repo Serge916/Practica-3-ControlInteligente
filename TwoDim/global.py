@@ -10,7 +10,7 @@ q = 0.3 ** 2
 r = 0.1 ** 2
 rango_sensor = 100
 t_max = 5000
-
+rnd.seed(123456789)
 
 #Constantes iniciales
 v_lin = 0.5     #Velocidad lineal m/s
