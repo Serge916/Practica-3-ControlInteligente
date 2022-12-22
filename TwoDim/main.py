@@ -13,11 +13,10 @@ t_max = 5000  # (s) este parámetro no se cambia
 #seeds = [123456789, 234567891, 34567891, 456789123, 567891234, 67891234, 7891234, 89123456, 912345678, 213456789]
 seeds = [123456789, 123456789]
 
-#q_set = [0.2, 0.4, 0.5, 0.7]
-#r_eval = [0.2, 0.3, 0.4, 0.8]
-q_set = [0.3]
-r_eval = [0.1]
-rango_set = [100]
+q_set = [0.2, 0.4, 0.5, 0.7]
+r_eval = [0.2, 0.3, 0.4, 0.8]
+#r_eval = [0.4]
+rango_set = [70, 20, 30, 50]
 
 #Ctes iniciales
 v_lin = 0.5     #Velocidad lineal m/s
@@ -30,7 +29,6 @@ m = [ (0, 2*radio),
 with open('log.csv','w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(['x_avg', 'y_avg', 'xest_avg', 'yest_avg', 'error_avg', 'x_std', 'y_std', 'xest_std', 'yest_std', 'var_q', 'var_r'])
-
     for j in enumerate(r_eval):
         r_set = j[1]
         for i in enumerate(q_set):
