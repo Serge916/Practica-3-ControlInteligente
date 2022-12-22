@@ -194,7 +194,7 @@ def localizacion_FK(q, r, rango_sensor, dist, t_max, seeds):
                               [ 0, 0]])  # 2x2 para (x,y)
 
             fila = {'x': [x[0][0]], 'xest': [x_est[0][0]], 'xerror': [math.fabs(x[0][0] - x_est[0][0])], 'p': [P[0][0]],
-                    'z': [z[0][0]], 'K': [K[0][0]], 'q': [q], 'r': [r]}
+                    'z': [z[0][0]], 'K': [K[0][0]], 'q': q, 'r': r}
             estados[i] = pd.concat([estados[i], pd.DataFrame(fila)], ignore_index=True)
                    
     return estados

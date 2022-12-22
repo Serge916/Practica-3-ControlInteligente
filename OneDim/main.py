@@ -3,6 +3,7 @@ import localizacion as loc
 import plots
 import csv
 import MergeImages as merge
+import numpy as np
 
 
 dist = 200    # (m) este parámetro no se cambia
@@ -36,8 +37,9 @@ with open('log.csv','w', newline='') as file:
 
             # Localización con FK y un landmark
             estados2 = loc.localizacion_FK(q, r, rango_sensor, dist, t_max, seeds)
-            writer.writerow(estados2[0].mean())
             estados2_media = sum(estados2)/len(estados2)
+            fila = [np.average(estados2_media['x']), np.average(estados2_media['xest']),np.average(estados2_media['p']),np.average(estados2_media['z']),np.average(estados2_media['K']), q, r]
+            writer.writerow(fila)
             plt.figure(2)
             plots.plot_estados(estados2_media, i[1], r_set, "media/lfk_q" + str(i[0]) + "r" + str(j[0]) + ".png", dist)
 
